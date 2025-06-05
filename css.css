@@ -1,0 +1,201 @@
+/* Styles généraux */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  padding-top: 60px; /* Ajuste l'espacement en haut pour compenser la hauteur de la navbar fixe */
+  transition: padding-top 0.3s ease; /* Pour ajouter une transition à l'espacement en haut lors du scroll */
+  background-color: lightgray;
+}
+
+/* Conteneur principal */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Prend toute la hauteur de la fenêtre */
+  position: relative;
+}
+
+/* Style de la photo de profil */
+.photo-de-profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image de profil (centrée au départ) */
+.image {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  transition: all 0.4s ease; /* Animation fluide */
+}
+
+/* Titre (centré sous l'image au départ) */
+.titre {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 20;
+  transition: all 0.4s ease;
+}
+
+/* Lorsque l'utilisateur scroll */
+.scrolled .image {
+  position: fixed; /* Fixe l'image en haut à gauche */
+  top: 0px;
+  left: 0px;
+  transform: none; /* Ne plus centrer */
+  border-radius: 50%;
+  z-index: 1000;
+}
+
+/* Le titre passe à côté de l'image */
+.scrolled .titre {
+  position: fixed;
+  top: 60px;
+  transform: none;
+  font-size: 18px;
+  text-align: left;
+  z-index: 1000;
+}
+
+/* Ajustement du titre h1 dans le mode scrollé si tu veux qu’il rétrécisse aussi */
+.scrolled .titre {
+  font-size: 20px;
+  color: #333; /* Optionnel : pour s’adapter à la navbar foncée */
+}
+
+/* Style du titre */
+.titre {
+  font-size: 36px;
+  color: #333;
+  margin: 0;
+}
+
+/* Navbar fixe en haut */
+nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  position: fixed; /* Fixe la navbar en haut de la page */
+  top: 0; /* Place la navbar tout en haut */
+  left: 0; /* Aligne la navbar sur la gauche */
+  width: 100%; /* Occupe toute la largeur de l'écran */
+  z-index: 10; /* Assure que la navbar est au-dessus du reste du contenu */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre sous la navbar pour effet visuel */
+}
+
+body {
+  margin-top: 60px; /* Ajuste l'espace en haut pour éviter que la navbar masque le contenu */
+}
+
+/* Lors du scroll, déplace la navbar à droite pour éviter que les liens ne se cachent sous l'image */
+.scrolled nav {
+  left: 100px; /* Déplace la navbar de 220px (largeur de l'image) vers la droite */
+}
+
+nav li {
+  display: inline-block; /* Affiche les éléments horizontalement */
+}
+
+nav a img {
+  width: 20px; /* Taille de l'icône */
+  height: 20px; /* Taille de l'icône */
+  margin-right: 8px; /* Espacement entre l'icône et le texte */
+}
+
+nav a {
+  display: block;
+  color: white; /* Couleur du texte */
+  padding: 14px 20px; /* Espacement autour du texte */
+  text-align: center; /* Centrer le texte */
+  text-decoration: none; /* Supprimer les soulignements */
+  font-size: 16px; /* Taille de la police */
+}
+
+nav a:hover {
+  background-color: #ddd; /* Couleur de fond au survol */
+  color: black; /* Couleur du texte au survol */
+}
+
+
+.tableau section{
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+section li{
+  list-style-type: none;
+}
+
+.tableau{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+
+footer {
+  background-color: #333;
+  width: 100%;
+  padding: 20px;
+  color: white;
+}
+
+/* Styles des champs texte et email */
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #333;
+  outline: none;
+}
+
+/* Zone de texte plus haute */
+textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+/* Bouton stylisé */
+button[type="submit"] {
+  padding: 12px 20px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #555;
+}

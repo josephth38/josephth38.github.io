@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJ's Portfolio</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Lien vers les Google Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body id="top">
+    <header>
+        <div class="container">
+            <div class="image">
+              <img src="image-profile.jfif" alt="Image de Profil" class="photo-de-profile">
+            </div>
+            <div class="titre">
+              <h1>Thomas JOSEPH</h1>
+            </div>
+        </div>
+        
+        <nav>
+            <ol>
+                <li><a href="#top"><span class="material-icons">home</span> Home</a></li>
+                <li><a href="#a propos"><span class="material-symbols-outlined">person_check</span> A propos de moi</a></li>
+                <li><a href="#projets"><span class="material-icons">work</span> Mes projets</a></li>
+                <!--<li><a href="#etudes"><span class="material-icons">school</span> Mes études</a></li>-->
+                <li><a href="#formulaire"><span class="material-icons">mail</span> Me contacter</a></li>
+            </ol>
+        </nav>
+        
+          <script src="java.js"></script>
+    </header>
+
+    <main>
+        <div class="a_propos" id="a propos">
+            <h2>A propos de moi</h2>
+            <section class="tableau">
+                <section>
+                    <h3>Sport</h3>
+                </section>
+                <section>
+                    <ul>
+                        <li><span class="material-symbols-outlined">directions_bike</span> cyclisme</li>
+                        <li><span class="material-symbols-outlined">directions_run</span> course à pied</li>
+                        <li><span class="material-symbols-outlined">sports_score</span> Raid (multisport)</li>
+                    </ul>
+                </section>
+            </section>
+            <section class="tableau">
+                <section>
+                    <h3>Autre</h3>
+                </section>
+                <section>
+                    <ul>
+                        <li><span class="material-symbols-outlined">headphones</span> musique</li>
+                        <li><span class="material-symbols-outlined">auto_stories</span> lecture (mangas et romans)</li>
+                        <li><span class="material-symbols-outlined">sports_esports</span> jeux vidéo</li>
+                    </ul>
+                </section>
+            </section>
+        </div>
+        <div class="projets" id="projets">
+            <h2>Mes projets</h2>
+            <section class="tableau">
+                <section>
+                    <h3>Projets Scolaires</h3>
+                    <ul>
+                        <li>SAE en java</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Projets Personnels</h3>
+                    <ul>
+                        <li>jeux avec Scratch</li>
+                    </ul>
+                </section>
+            </section>
+        </div>
+    <!--
+        <div class="etudes" id="etudes">
+            <h2>Mes études</h2>
+            <section class="tableau">
+                <section>
+                    <ul>
+                        <li>2020-2023 : Lycée Pierre Termier en STI2D vers BAC technologique</li>
+                        <li>2023 : Année abandonnée a l'EPITECH de Lyon</li>
+                        <li>2024-2025 : IUT2</li>
+                    </ul>
+                </section>
+            </section>
+        </div>
+        <div class="expériencepro" id="experiencepro">
+            <h2>Mon Expérience Professionnelle</h2>
+            <section class="tableau">
+                <section>
+                    <h3>Job d'été 2022 : Agent d'entretien en Piscine</h3>
+                </section>
+                <section>
+                    <h3>Job d'été 2023 : Recolte du raisin pendant les Vendanges</h3>
+                </section>
+                <section>
+                    <h3>Service civique 2024 : 6 mois de mission autour de la Promotion du Sport dans le cadre des JO</h3>
+                </section>
+            </section>
+        </div>
+    -->
+        <div class="formulaire" id="formulaire">
+            <h2>Me contacter</h2>
+            <div>
+                <form action="https://formsubmit.co/thomasjoseph@free.fr" method="POST">
+                    <section class="tableau">
+                        <section>
+                            <input type="text" name="name" required placeholder="Nom"/>
+                        </section>
+                        <section>
+                            <input type="email" name="email" required placeholder="E-Mail"/>
+                        </section>
+                        <section>
+                            <input type="text" name="subject" required placeholder="Sujet"/>
+                        </section>
+                        <section>
+                            <button type="submit">Envoyer</button>
+                        </section>
+                    </section>
+                    <section class="tableau">
+                        <section>
+                            <textarea name="msg" required placeholder="Sujet Du Message"></textarea>
+                        </section>
+                    </section>
+                </form>
+            </div>
+        </div>
+        
+    </main>
+    <footer>
+        ceci est un footer
+    </footer>
+</body>
+</html>
