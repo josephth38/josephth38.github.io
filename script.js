@@ -1,91 +1,66 @@
-// ================================
-// 🌌 FADE-IN + SLIDE DES SECTIONS
-// ================================
-const sections = document.querySelectorAll('.section');
+// ============================
+// 🌌 Animation du fond (étoiles + lune)
+// ============================
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-function revealSections() {
-  const windowHeight = window.innerHeight;
+let stars = [];
+const numStars = 120;
+let width, height;
 
-  sections.forEach(section => {
-    const sectionTop = section.getBoundingClientRect().top;
-    const revealPoint = 150;
-
-    if (sectionTop < windowHeight - revealPoint) {
-      section.classList.add('visible');
-    }
-  });
-}
-
-window.addEventListener('scroll', revealSections);
-revealSections();
-
-
-// ================================
-// ⭐ CANVAS ÉTOILES + LUNE RÉALISTE
-// ================================
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
-
-// Génération étoiles
-const stars = [];
-const numStars = 200;
-
-for (let i = 0; i < numStars; i++) {
-  stars.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    radius: Math.random() * 1.5,
-    speed: Math.random() * 0.2 + 0.05
-  });
-}
-
-window.addEventListener('resize', () => {
+function resizeCanvas() {
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
-});
+  initStars();
+}
 
-// Position et caractéristiques de la lune
-const moonX = width / 2;
-const moonY = height / 2;
-const moonRadius = 80;
-
-// Cratères fixes sur la lune
-const craters = [];
-for (let i = 0; i < 15; i++) {
-  const angle = Math.random() * Math.PI * 2;
-  const radius = Math.random() * moonRadius * 0.6;
-  const craterX = moonX + radius * Math.cos(angle);
-  const craterY = moonY + radius * Math.sin(angle);
-  const craterRadius = Math.random() * 5;
-  craters.push({ x: craterX, y: craterY, r: craterRadius });
+function initStars() {
+  stars = [];
+  for (let i = 0; i < numStars; i++) {
+    stars.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.5,
+      speed: 0.05 + Math.random() * 0.05
+    });
+  }
 }
 
 function drawMoon() {
-  // 🌌 Halo plus petit
-  const gradient = ctx.createRadialGradient(moonX, moonY, moonRadius * 0.5, moonX, moonY, moonRadius * 6);
-  gradient.addColorStop(0, 'rgba(255, 255, 230, 0.35)');
-  gradient.addColorStop(0.5, 'rgba(255, 255, 230, 0.15)');
-  gradient.addColorStop(1, 'rgba(18, 25, 35, 0)');
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radius = 90;
 
+  // Halo doux
+  const gradient = ctx.createRadialGradient(centerX, centerY, radius * 0.4, centerX, centerY, radius * 2);
+  gradient.addColorStop(0, "rgba(255,255,220,0.3)");
+  gradient.addColorStop(1, "rgba(11,22,34,0)");
+
+  ctx.beginPath();
   ctx.fillStyle = gradient;
-  ctx.beginPath();
-  ctx.arc(moonX, moonY, moonRadius * 6, 0, Math.PI * 2);
+  ctx.arc(centerX, centerY, radius * 2, 0, Math.PI * 2);
   ctx.fill();
 
-  // 🌙 Lune solide
-  ctx.fillStyle = '#ffffee';
+  // Lune principale
+  const moonGradient = ctx.createRadialGradient(centerX, centerY, radius * 0.2, centerX, centerY, radius);
+  moonGradient.addColorStop(0, "#fff9e6");
+  moonGradient.addColorStop(1, "#bfbba5");
+
   ctx.beginPath();
-  ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+  ctx.fillStyle = moonGradient;
+  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
   ctx.fill();
 
-  // Cratères fixes
-  craters.forEach(crater => {
-    ctx.fillStyle = 'rgba(200,200,180,0.4)';
+  // Cratères légers (fixes)
+  const craters = [
+    { x: -30, y: -20, r: 8 },
+    { x: 25, y: 10, r: 10 },
+    { x: 10, y: -30, r: 6 },
+  ];
+  ctx.fillStyle = "rgba(200,200,180,0.3)";
+  craters.forEach(c => {
     ctx.beginPath();
-    ctx.arc(crater.x, crater.y, crater.r, 0, Math.PI * 2);
+    ctx.arc(centerX + c.x, centerY + c.y, c.r, 0, Math.PI * 2);
     ctx.fill();
   });
 }
@@ -93,24 +68,60 @@ function drawMoon() {
 function animate() {
   ctx.clearRect(0, 0, width, height);
 
-  drawMoon();
-
-  // ⭐ Étoiles
-  ctx.fillStyle = '#ffffff';
-  ctx.shadowColor = '#ffffff';
-  ctx.shadowBlur = 2;
-
+  // Étoiles
+  ctx.fillStyle = "white";
   stars.forEach(star => {
     ctx.beginPath();
     ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Déplacement lent des étoiles
-    star.x += star.speed;
-    if (star.x > width) star.x = 0;
+    // Mouvement doux
+    star.y += star.speed;
+    if (star.y > height) star.y = 0;
   });
+
+  // Lune
+  drawMoon();
 
   requestAnimationFrame(animate);
 }
 
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 animate();
+
+
+// ============================
+// 🖱️ Navigation entre sections (sidebar + onglets)
+// ============================
+
+// Gérer la navigation
+const navItems = document.querySelectorAll(".nav li");
+const tabs = document.querySelectorAll(".tab");
+const sections = document.querySelectorAll(".section");
+
+function showSection(index) {
+  sections.forEach((section, i) => {
+    section.classList.toggle("visible", i === index);
+  });
+
+  navItems.forEach((item, i) => {
+    item.classList.toggle("active", i === index);
+  });
+
+  tabs.forEach((tab, i) => {
+    tab.classList.toggle("active", i === index);
+  });
+}
+
+// Ajouter les événements
+navItems.forEach((item, index) => {
+  item.addEventListener("click", () => showSection(index));
+});
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => showSection(index));
+});
+
+// Affiche la première section par défaut
+showSection(0);

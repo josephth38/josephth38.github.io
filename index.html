@@ -5,124 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio - Thomas JOSEPH</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=assignment" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-<canvas id="stars"></canvas>
+  <canvas id="stars"></canvas>
 
-  <!-- 🔥 HEADER -->
-  <header id="site-header">
-    <div class="topbar container">
-      <!-- Branding -->
-      <div class="branding">
-        <div class="avatar-wrap">
-          <img src="image-profile.jfif" alt="Photo de Thomas Joseph" class="avatar" />
-        </div>
-        <div class="brand-text">
+  <!-- Interface Visual Studio Code -->
+  <div class="vscode-layout">
+
+    <!-- Barre latérale gauche -->
+    <aside class="sidebar">
+      <div class="logo">JOSEPH</div>
+      <ul class="nav">
+        <li data-target="home" class="active"><span class="material-icons">home</span></li>
+        <li data-target="about"><span class="material-icons">person</span></li>
+        <li data-target="projects"><span class="material-icons">work</span></li>
+        <li data-target="experience"><span class="material-symbols-outlined">assignment</span></li>
+        <li data-target="studies"><span class="material-icons">school</span></li>
+        <li data-target="contact"><span class="material-icons">mail</span></li>
+      </ul>
+    </aside>
+
+    <!-- Conteneur principal -->
+    <div class="editor">
+
+      <!-- Barre d’onglets -->
+      <div class="tabs">
+        <div class="tab active" data-target="home">home</div>
+        <div class="tab" data-target="style">a propos</div>
+        <div class="tab" data-target="script">mes projets</div>
+        <div class="tab" data-target="experience">mon experience pro</div>
+        <div class="tab" data-target="studies">mes études</div>
+        <div class="tab" data-target="contact">me contacter</div>
+      </div>
+
+      <!-- Contenu du portfolio -->
+      <div class="content">
+
+        <!-- Présentation -->
+        <section id="home" class="section visible">
           <h1>Thomas JOSEPH</h1>
-          <p class="role">Étudiant · Développeur · Sportif</p>
-        </div>
-      </div>
+          <p>Étudiant • Développeur • Sportif</p>
+          <img src="image-profile.jfif" alt="Photo de profil" class="profile-pic">
+        </section>
 
-      <!-- Navigation -->
-      <nav id="main-nav" aria-label="Navigation principale">
-        <ul>
-          <li><a href="#top"><span class="material-icons">home</span> Accueil</a></li>
-          <li><a href="#apropos"><span class="material-symbols-outlined">person_check</span> À propos</a></li>
-          <li><a href="#projets"><span class="material-icons">work</span> Projets</a></li>
-          <li><a href="#etudes"><span class="material-icons">school</span> Études</a></li>
-          <li><a href="#contact"><span class="material-icons">mail</span> Contact</a></li>
-        </ul>
-      </nav>
+        <!-- A propos -->
+        <section id="about" class="section">
+          <h2>À propos de moi</h2>
+          <div class="tableau">
+            <div>
+              <h3>Sports</h3>
+              <ul>
+                <li>🚴 Cyclisme</li>
+                <li>🏃 Course à pied</li>
+                <li>🎯 Raid multisport</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Autres</h3>
+              <ul>
+                <li>🎧 Musique</li>
+                <li>📚 Lecture (mangas et romans)</li>
+                <li>🎮 Jeux vidéo</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Projets -->
+        <section id="projects" class="section">
+          <h2>Mes Projets</h2>
+          <div class="tableau">
+            <div class="card">
+              <h3>Projets Scolaires</h3>
+              <p>SAE en Java</p>
+            </div>
+            <div class="card">
+              <h3>Projets Personnels</h3>
+              <p>Jeux développés avec Scratch</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" class="section">
+          <h2>Mes Experiences Professionelles</h2>
+          <div class="tableau">
+            <div class="card">
+              <h3></h3>
+            </div>
+          </div>
+        </section>
+
+        <!-- Études -->
+        <section id="studies" class="section">
+          <h2>Mes Études</h2>
+          <div class="tableau">
+            <div class="card">
+              <h3>2020-2023 : </h3>Lycée Pierre Termier – Bac STI2D
+            </div>
+            <div class="card">
+              <h3>2023 : </h3>Année à EPITECH Lyon
+            </div>
+            <div class="card">
+              <h3>2024-2026 : </h3>IUT2 Informatique puis Parcours Réalisation d’Application en BUT2
+            </div>
+          </div>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section">
+          <h2>Me Contacter</h2>
+          <form action="contact.php" method="POST">
+            <input type="text" name="name" placeholder="Nom" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="subject" placeholder="Sujet" required>
+            <textarea name="message" placeholder="Votre message..." required></textarea>
+            <button type="submit">Envoyer</button>
+          </form>
+        </section>
+
+      </div>
     </div>
-  </header>
-
-  <!-- 🌞 MAIN CONTENT -->
-  <main>
-    <!-- À propos -->
-    <section id="apropos" class="section">
-      <h2>À propos de moi</h2>
-      <div class="tableau">
-        <section>
-          <h3>Sport</h3>
-          <ul>
-            <li><span class="material-symbols-outlined">directions_bike</span> Cyclisme</li>
-            <li><span class="material-symbols-outlined">directions_run</span> Course à pied</li>
-            <li><span class="material-symbols-outlined">sports_score</span> Raid multisport</li>
-          </ul>
-        </section>
-        <section>
-          <h3>Autres passions</h3>
-          <ul>
-            <li><span class="material-symbols-outlined">headphones</span> Musique</li>
-            <li><span class="material-symbols-outlined">auto_stories</span> Lecture (mangas & romans)</li>
-            <li><span class="material-symbols-outlined">sports_esports</span> Jeux vidéo</li>
-          </ul>
-        </section>
-      </div>
-    </section>
-
-    <!-- Projets -->
-    <section id="projets" class="section">
-      <h2>Mes Projets</h2>
-      <div class="tableau">
-        <section>
-          <h3>Projets Scolaires</h3>
-          <ul>
-            <li>SAE en Java</li>
-          </ul>
-        </section>
-        <section>
-          <h3>Projets Personnels</h3>
-          <ul>
-            <li>Jeux développés avec Scratch</li>
-          </ul>
-        </section>
-      </div>
-    </section>
-
-    <!-- Études -->
-    <section id="etudes" class="section">
-      <h2>Mes Études</h2>
-      <div class="tableau">
-        <section>
-          <ul>
-            <li>2020-2023 : Lycée Pierre Termier – Bac STI2D</li>
-            <li>2023 : Année à EPITECH Lyon</li>
-            <li>2024-2025 : IUT2 Informatique</li>
-          </ul>
-        </section>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section">
-      <h2>Me contacter</h2>
-      <form action="contact.php" method="POST">
-        <div class="tableau">
-          <section><input type="text" name="name" required placeholder="Nom" /></section>
-          <section><input type="email" name="email" required placeholder="E-Mail" /></section>
-          <section><input type="text" name="subject" required placeholder="Sujet" /></section>
-        </div>
-
-        <!-- 📬 Message au-dessus du bouton -->
-        <div class="tableau">
-          <section><textarea name="msg" required placeholder="Votre message"></textarea></section>
-        </div>
-
-        <div class="tableau">
-          <section><button type="submit">Envoyer</button></section>
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Thomas JOSEPH — Tous droits réservés</p>
-  </footer>
-
-  <script src="script.js"></script>
+  </div>
 </body>
 </html>

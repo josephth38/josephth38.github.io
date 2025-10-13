@@ -1,18 +1,37 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = htmlspecialchars($_POST["name"]);
-    $email = htmlspecialchars($_POST["email"]);
-    $subject = htmlspecialchars($_POST["subject"]);
-    $msg = htmlspecialchars($_POST["msg"]);
+// ============================
+// 📨 Script de traitement du formulaire de contact
+// ============================
 
-    $to = "ton_email@exemple.com";
-    $headers = "From: $email\r\n";
-    $message = "Nom: $name\nEmail: $email\nSujet: $subject\n\nMessage:\n$msg";
+// Vérifier si le formulaire a été soumis
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Nettoyer les données reçues
+    $nom = htmlspecialchars(trim($_POST["nom"]));
+    $email = htmlspecialchars(trim($_POST["email"]));
+    $message = htmlspecialchars(trim($_POST["message"]));
 
-    if (mail($to, $subject, $message, $headers)) {
-        echo "Message envoyé avec succès ✅";
+    // Vérifier les champs
+    if (!empty($nom) && !empty($email) && !empty($message)) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+            // Adresse mail où le message doit être envoyé
+            $to = "thomasjoseph@free.fr"; // <-- remplace par ton adresse réelle
+            $subject = "📩 Nouveau message de ton portfolio - $nom";
+            $body = "Nom : $nom\nEmail : $email\n\nMessage :\n$message";
+            $headers = "From: $email\r\nReply-To: $email\r\nX-Mailer: PHP/" . phpversion();
+
+            // Envoi du mail
+            if (mail($to, $subject, $body, $headers)) {
+                echo "<p style='color: #3b82f6; text-align:center; margin-top:20px;'>✅ Message envoyé avec succès ! Merci $nom.</p>";
+            } else {
+                echo "<p style='color: #f87171; text-align:center; margin-top:20px;'>❌ Erreur lors de l'envoi du message.</p>";
+            }
+
+        } else {
+            echo "<p style='color: #f87171; text-align:center; margin-top:20px;'>⚠️ Adresse e-mail invalide.</p>";
+        }
     } else {
-        echo "Erreur lors de l'envoi ❌";
+        echo "<p style='color: #f87171; text-align:center; margin-top:20px;'>⚠️ Tous les champs sont obligatoires.</p>";
     }
 }
 ?>
