@@ -1,127 +1,119 @@
-// ============================
-// 🌌 Animation du fond (étoiles + lune)
-// ============================
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+// Navigation + scroll + swipe + typing logic
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("main-container");
+  const sections = Array.from(document.querySelectorAll(".page"));
+  const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+  const scrollDown = document.querySelector(".scroll-down");
 
-let stars = [];
-const numStars = 120;
-let width, height;
+  // NAV LINK CLICK -> scroll to section
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const idx = parseInt(link.dataset.section, 10);
+      if (!Number.isNaN(idx) && sections[idx]) {
+        sections[idx].scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
 
-function resizeCanvas() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-  initStars();
-}
+  // Update active link on scroll
+  function updateActiveNav() {
+    const index = Math.round(container.scrollTop / window.innerHeight);
+    navLinks.forEach(n => n.classList.remove("active"));
+    if (navLinks[index]) navLinks[index].classList.add("active");
+  }
+  container.addEventListener("scroll", throttle(updateActiveNav, 100));
+  updateActiveNav();
 
-function initStars() {
-  stars = [];
-  for (let i = 0; i < numStars; i++) {
-    stars.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      radius: Math.random() * 1.5,
-      speed: 0.05 + Math.random() * 0.05
+  // Scroll down arrow
+  if (scrollDown) {
+    scrollDown.addEventListener("click", () => {
+      const next = document.getElementById("projects");
+      if (next) next.scrollIntoView({ behavior: "smooth" });
     });
   }
-}
 
-function drawMoon() {
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const radius = 90;
-
-  // Halo doux
-  const gradient = ctx.createRadialGradient(centerX, centerY, radius * 0.4, centerX, centerY, radius * 2);
-  gradient.addColorStop(0, "rgba(255,255,220,0.3)");
-  gradient.addColorStop(1, "rgba(11,22,34,0)");
-
-  ctx.beginPath();
-  ctx.fillStyle = gradient;
-  ctx.arc(centerX, centerY, radius * 2, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Lune principale
-  const moonGradient = ctx.createRadialGradient(centerX, centerY, radius * 0.2, centerX, centerY, radius);
-  moonGradient.addColorStop(0, "#fff9e6");
-  moonGradient.addColorStop(1, "#bfbba5");
-
-  ctx.beginPath();
-  ctx.fillStyle = moonGradient;
-  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Cratères légers (fixes)
-  const craters = [
-    { x: -30, y: -20, r: 8 },
-    { x: 25, y: 10, r: 10 },
-    { x: 10, y: -30, r: 6 },
-  ];
-  ctx.fillStyle = "rgba(200,200,180,0.3)";
-  craters.forEach(c => {
-    ctx.beginPath();
-    ctx.arc(centerX + c.x, centerY + c.y, c.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
-}
-
-function animate() {
-  ctx.clearRect(0, 0, width, height);
-
-  // Étoiles
-  ctx.fillStyle = "white";
-  stars.forEach(star => {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Mouvement doux
-    star.y += star.speed;
-    if (star.y > height) star.y = 0;
+  // Touch swipe detection (mobile)
+  let startY = 0;
+  container.addEventListener("touchstart", (e) => startY = e.touches[0].clientY);
+  container.addEventListener("touchend", (e) => {
+    const endY = e.changedTouches[0].clientY;
+    const diff = startY - endY;
+    if (Math.abs(diff) > 60) {
+      const currentIndex = Math.round(container.scrollTop / window.innerHeight);
+      const nextIndex = diff > 0 ? currentIndex + 1 : currentIndex - 1;
+      if (sections[nextIndex]) sections[nextIndex].scrollIntoView({ behavior: "smooth" });
+    }
   });
 
-  // Lune
-  drawMoon();
+  // Typing animation (character by character) - stable width and full text visible
+  const typingEl = document.querySelector(".typing");
+  const cursorEl = document.querySelector(".cursor");
+  const text = "Passionné de code";
+  const typingSpeed = 70; // ms per char
+  const pauseAfter = 1500; // ms to wait after full text
 
-  requestAnimationFrame(animate);
-}
+  if (typingEl) {
+    let i = 0;
+    function type() {
+      if (i <= text.length) {
+        typingEl.textContent = text.slice(0, i);
+        i++;
+        setTimeout(type, typingSpeed);
+      } else {
+        // keep full text visible; optionally loop after a pause
+        setTimeout(() => {
+          // optional: erase and retype loop (comment out if you don't want loop)
+          // erase();
+          // OR keep static cursor blinking; do nothing to keep it static
+        }, pauseAfter);
+      }
+    }
+    // if you prefer a loop (type -> erase -> type), uncomment erase/type logic below:
+    /*
+    function erase() {
+      if (i >= 0) {
+        typingEl.textContent = text.slice(0, i);
+        i--;
+        setTimeout(erase, 40);
+      } else {
+        setTimeout(() => { i = 0; type(); }, 300);
+      }
+    }
+    */
+    type();
+  }
 
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-animate();
-
-
-// ============================
-// 🖱️ Navigation entre sections (sidebar + onglets)
-// ============================
-
-// Gérer la navigation
-const navItems = document.querySelectorAll(".nav li");
-const tabs = document.querySelectorAll(".tab");
-const sections = document.querySelectorAll(".section");
-
-function showSection(index) {
-  sections.forEach((section, i) => {
-    section.classList.toggle("visible", i === index);
-  });
-
-  navItems.forEach((item, i) => {
-    item.classList.toggle("active", i === index);
-  });
-
-  tabs.forEach((tab, i) => {
-    tab.classList.toggle("active", i === index);
-  });
-}
-
-// Ajouter les événements
-navItems.forEach((item, index) => {
-  item.addEventListener("click", () => showSection(index));
+  // small utility: throttle
+  function throttle(fn, wait) {
+    let last = 0;
+    return function(...args) {
+      const now = Date.now();
+      if (now - last >= wait) {
+        last = now;
+        fn.apply(this, args);
+      }
+    };
+  }
 });
 
-tabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => showSection(index));
-});
+  // ---- Bouton retour vers le haut ----
+  const scrollTopBtn = document.querySelector(".scroll-top");
 
-// Affiche la première section par défaut
-showSection(0);
+  function toggleScrollTop() {
+    if (!scrollTopBtn) return;
+    // apparaît après la première section
+    if (container.scrollTop > window.innerHeight * 0.6) {
+      scrollTopBtn.classList.add("visible");
+    } else {
+      scrollTopBtn.classList.remove("visible");
+    }
+  }
+
+  container.addEventListener("scroll", throttle(toggleScrollTop, 100));
+
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener("click", () => {
+      sections[0].scrollIntoView({ behavior: "smooth" });
+    });
+  }
