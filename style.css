@@ -28,6 +28,13 @@ html,body { height:100%; font-family: "Poppins", sans-serif; background:#000; co
   scroll-snap-align:start;
 }
 
+/* Sections avec beaucoup de contenu (ex: projets) : on autorise le scroll interne
+   pour ne pas couper le contenu si l'écran est petit */
+#projects {
+  height:auto; min-height:100vh;
+  overflow-y:auto; padding-top:6rem; padding-bottom:3rem;
+}
+
 /* ---------- HERO ---------- */
 .hero {
   position:relative; overflow:hidden;
@@ -69,7 +76,7 @@ html,body { height:100%; font-family: "Poppins", sans-serif; background:#000; co
 @keyframes bounce { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(10px);} }
 @keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:0 } }
 
-/* ---------- PROJECT CARDS ---------- */
+/* ---------- PROJECT CARDS (anciennes cards, conservées si réutilisées ailleurs) ---------- */
 .cards { display:flex; gap:1.6rem; flex-wrap:wrap; justify-content:center; margin-top:1.2rem; }
 .card {
   background: rgba(255,255,255,0.04); border-radius:12px; padding:1.2rem;
@@ -77,6 +84,39 @@ html,body { height:100%; font-family: "Poppins", sans-serif; background:#000; co
   border:1px solid rgba(255,255,255,0.04);
 }
 .card h3 { color:#00a8ff; margin-bottom:.4rem; }
+
+/* ---------- PROJECT ROWS (nouvelle mise en page : 1 projet = 1 ligne) ---------- */
+.project-rows {
+  display:flex; flex-direction:column; gap:1.6rem;
+  width:100%; max-width:900px; margin-top:1.2rem;
+}
+.project-row {
+  display:flex; align-items:center; gap:1.6rem;
+  background: rgba(255,255,255,0.04); border-radius:12px; padding:1.4rem;
+  box-shadow:0 6px 18px rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.04);
+  text-align:left;
+}
+.project-text {
+  flex:1 1 55%; display:flex; flex-direction:column; gap:.5rem;
+}
+.project-text h3 { color:#00a8ff; margin-bottom:.2rem; }
+.project-text p { color:#dfefff; line-height:1.5; }
+.project-link {
+  align-self:flex-start; margin-top:.4rem;
+  padding:.6rem 1.3rem; border-radius:8px;
+  background:#00a8ff; color:#fff; font-weight:600; text-decoration:none;
+  font-size:.9rem; transition:background .2s ease, transform .2s ease;
+}
+.project-link:hover { background:#0090e0; transform:translateY(-2px); }
+.project-image {
+  flex:1 1 45%; order:2;
+}
+.project-image img {
+  width:100%; height:220px; object-fit:cover;
+  border-radius:10px; display:block;
+  border:1px solid rgba(255,255,255,0.06);
+}
 
 /* ---------- SKILLS GRID ---------- */
 .skills-grid { display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
@@ -111,6 +151,11 @@ button { padding:.75rem; border-radius:8px; border:none; background:#00a8ff; col
   .hero-content { padding-top:40px; }
   .cards, .skills-grid { gap:1rem; }
   .timeline { width:90%; padding-left:1rem; }
+
+  .project-row { flex-direction:column; }
+  .project-image { order:0; }
+  .project-text { order:1; }
+  .project-image img { height:180px; }
 }
 
 /* ---------- FLECHE RETOUR HAUT ---------- */
